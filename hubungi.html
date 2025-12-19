@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+ <header class="fixed right-0 left-0 top-0 z-50 bg-white shadow-sm">
+    <div class="mx-auto px-4 py-4">
+        
+        <div class="flex items-center px-2 lg:px-6">
+
+            <div class="shrink-0">
+                <a href="#" class="relative block h-10 w-32">
+                    <img
+                        src="images/company-logo.svg"
+                        alt="logo1"
+                        class="object-contain h-full w-full"
+                    />
+                </a>
+            </div>
+
+            <div id="desktop-nav-links" class="hidden lg:flex items-center ml-10">
+                <nav class="flex space-x-4">
+                    
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">layanan</button>
+                        <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 w-max bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1">
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">layanan pengiriman</a>
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">bisnis bersama sicepat</a>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">perusahaan</button>
+                        <div class="absolute hidden group-hover:block top-full left-0 w-52 bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1 mt-1">
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Perusahaan</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Tentang Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap mb-2 pb-2">Berita & Promosi</a>
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Bantuan</a>
+                            <a href="hubungi.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Hubungi Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">FAQ</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Terms & Condition</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Privacy Policy</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Definisi</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">lokasi</a>
+                    <a href="karir.html" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">karir</a>
+                </nav>
+            </div>
+
+            <div class="ml-auto hidden lg:block shrink-0">
+                <a href="#" class="flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out px-4 py-2 font-medium rounded-3xl hover:scale-[1.02] text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+            </div>
+            
+            <button id="mobile-menu-button" class="lg:hidden text-gray-600 hover:text-[#AF272C] focus:outline-none ml-auto">
+                <svg id="icon-menu" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg id="icon-close" class="w-8 h-8 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+        </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden lg:hidden w-full bg-white shadow-lg border-t border-gray-100 p-4">
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">layanan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">perusahaan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">lokasi</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium mb-4 rounded-3xl">karir</a>
+        <a href="#" class="block text-center cursor-pointer px-4 py-2 font-medium rounded-3xl text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+    </div>
+</header>
+    <main class="min-h-screen bg-gray-100 pt-10 md:pt-20">
+      <section
+        class="flex flex-col lg:flex-row items-center justify-center p-8 bg-gray-100"
+      >
+        <div class="w-full lg:w-1/2 flex justify-center">
+          <img
+            src="images/sigesit_contact.webp"
+            alt="sigesit"
+            class="max-w-sm w-52 md:max-w-md  md:w-80 object-contain"
+          />
+        </div>
+        <div class="md:w-1/2 mt-10 md:mt-0  md:pr-72 md: text-center md:items-center md:text-left md:flex md:flex-col ">
+          <h1 class=" flex flex-col md:items-center  text-4xl font-bold mb-4">Hubungi Kami</h1>
+          <p class=" text-lg mb-6 flex item-center">
+            Kami ingin mengenalmu dan dengan  senang hati akan menjawab <br>
+            pertanyaanmu!
+          </p>
+
+          <button class="bg-[#af272c] text-white px-6 py-3 rounded-2xl">
+            <p>
+              <span class="flex justify-center items-center gap-4"><img src="images/contact.svg" alt="contact">hubungi kami sekarang</span>
+            </p>
+          </button>
+        </div>
+      </section>
+      <div class="max-w-7xl mx-auto my-10  overflow-hidden">
+    <div class="flex flex-col  lg:flex-row">
+
+        <div class="w-full lg:w-1/2 h-50 lg:min-h-[550px] ">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.408184959261!2d106.82837787358102!3d-6.2097713937781185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f502d6abe5df%3A0x38210cb1e0d382e8!2sSiCepat%20Ekspres%20Indonesia%20Pusat!5e0!3m2!1sid!2sid!4v1764831702287!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-[500px] h-[500px] rounded-lg ml-8  p-6"></iframe>
+        </div>
+
+        <div class="w-full lg:w-1/2 p-8 space-y-8 flex flex-col justify-center">
+            
+            <div class="flex items-start">
+                <div class="mr-4 w-13 h-13 flex-shrink-0">
+                    <img src="images/pin_point_red_circle.svg" alt="Ikon Lokasi" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg text-gray-800">Alamat Kami</h3>
+                    <p class="text-gray-600">
+                        Menara 2 BTN Lt. 10, 11, 12, dan 15, Jalan H.R. Rasuna Said Superblok II Kawasan Kuningan Persada, Desa/Kelurahan Guntur, Kec. Setiabudi, Kota Adm. Jakarta Selatan, Provinsi DKI Jakarta.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <div class="mr-4 w-13 h-13 flex-shrink-0">
+                    <img src="images/phone_red_circle.svg" alt="Ikon Telepon" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg text-gray-800">Telephone Perusahaan</h3>
+                    <p class="text-gray-600">021-3020-5050</p>
+                </div>
+            </div>
+            
+            <div class="flex items-start">
+                <div class="mr-4 w-13 h-13 flex-shrink-0">
+                    <img src="images/email_red_circle.svg" alt="Ikon Email" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg text-gray-800">Alamat Email</h3>
+                    <p class="text-gray-600">customer.care@sicepat.com</p>
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <div class="mr-4 w-13 h-13 flex-shrink-0">
+                    <img src="images/whatsapp_red_circle.svg" alt="Ikon WhatsApp" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg text-gray-800">Whatsapp</h3>
+                    <p class="text-gray-600">0812 9966 6088</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    </main>
+      <footer class="bg-white px-4 py-16 z-50">
+      <div class="mx-auto">
+        <div class="grid gap-8 md:grid-cols-12 ">
+          <div class="md:col-span-3">
+            <img src="images/company-logo.svg" alt="logo">
+            <p class="mb-4 text-sm text-gray-600">2025 PT. SiCepat Ekspres Indonesia.
+              <br>
+              All rights reserved.
+            </p>
+            <div class="flex flex-wrap flex-row items-center gap-x-2 gap-y-4 mt-2">
+              <img src="images/ISO27K1.webp" alt="iso" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-ALDEI.png" alt="aldei" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-asperindo.png" alt="asperindo" class="h-auto max-w-24 w-full flex-1 ">
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <h3 class=" mb-4 text-lg font-medium">Produk & Layanan</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">REGULER</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">BEST</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">GOKIL</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">COD</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">HALU</p>
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+             <h3 class=" mb-4 text-lg font-medium">Informasi</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">FAQ</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Terms & Condition</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Privacy Policy</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Definisi</p>
+
+          </div>
+
+        </div>
+        <div class="md:col-span-3">
+           <h3 class=" mb-4 text-lg font-medium">Contact</h3>
+           <div class="space-y-3">
+            <p class="text-sm text-gray-600">021-3020-5050</p>
+            <p class="text-sm text-gray-600">0812 9966 6088</p>
+            <p class="text-sm text-gray-600">
+              Menara 2 BTN Lt. 10, 11, 12, dan 15
+              <br>
+              Kawasan Kuningan Persada,
+              <br>
+              Desa/Kelurahan Guntur, Kec. Setiabudi,
+              <br>
+              Kota Adm. Jakarta Selatan, Provinsi DKI Jakarta.
+            </p>
+           </div>
+        </div>
+        <div class="md:col-span-2">
+          <h3 class=" mb-4 text-lg font-medium">Download app</h3>
+          <div class="flex flex-col gap-4">
+            <img src="images/playstore.svg" alt="playstore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+             <img src="images/applestore.svg" alt="applestore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script>
+    // 1. Ambil elemen
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+
+    // 2. Tambahkan event listener saat tombol diklik
+    menuButton.addEventListener('click', function() {
+        // 3. Toggle class 'hidden' pada menu mobile
+        mobileMenu.classList.toggle('hidden');
+        
+        // 4. Ganti ikon
+        // Periksa apakah menu sekarang terbuka (tidak memiliki class 'hidden')
+        if (!mobileMenu.classList.contains('hidden')) {
+            // Menu terbuka: tampilkan ikon silang, sembunyikan ikon menu
+            iconMenu.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+        } else {
+            // Menu tertutup: tampilkan ikon menu, sembunyikan ikon silang
+            iconMenu.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+<style>
+        /* ------------------------ A. CSS UMUM & FONT ------------------------ */
+        body { font-family: 'Poppins', sans-serif; }
+        
+        /* ------------------------ B. CSS FLIP CARD (DESKTOP) ------------------------ */
+        
+        .card-flip-container { perspective: 1000px; }
+        .card-flip { transform-style: preserve-3d; transition: transform 0.6s; }
+        
+        .card-flip-front,
+        .card-flip-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            border-radius: 0.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card-flip-back {
+            transform: rotateY(180deg); 
+            background-color: white; padding: 1.25rem; color: #333;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border: 2px solid #ef4444; 
+        }
+        
+        /* Efek HOVER & Tata Letak untuk Desktop (Layar > 768px) */
+        @media (min-width: 768px) {
+            .card-flip-container:hover .card-flip { transform: rotateY(180deg); }
+            
+            #desktop-container {
+                display: flex; 
+                flex-wrap: nowrap; 
+                justify-content: center;
+                gap: 1.5rem; 
+                padding: 0 1rem;
+            }
+            .card-flip-container {
+                width: 14rem; 
+                height: 14rem;
+            }
+            .card-flip-front div {
+                font-size: 7rem;
+            }
+            
+            #desktop-container .card-flip {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        
+        /* ------------------------ C. CSS INTERAKTIF (MOBILE) ------------------------ */
+        
+        /* Panah (Arrow) yang menunjuk ke Kartu Aktif */
+        .arrow-up {
+            width: 0; height: 0;
+            border-left: 15px solid transparent; border-right: 15px solid transparent;
+            border-bottom: 15px solid white; 
+            position: absolute; top: -15px;
+            transition: transform 0.3s ease-in-out; 
+        }
+        
+        /* Kelas aktif untuk kartu mobile */
+        .active-card {
+            box-shadow: 0 0 0 4px white, 0 0 0 6px #dc2626; 
+        }
+        
+        /* Animasi Teks */
+        .animate-slide-in { animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Menyembunyikan elemen Flip Card di Mobile */
+        @media (max-width: 767px) {
+            #desktop-container { display: none !important; }
+            
+            /* MEMPERBESAR KARTU MOBILE & MEMASTIKAN SATU BARIS FULL WIDTH */
+            #card-container-mobile .card-item {
+                 width: 19.8%; /* Ditingkatkan mendekati 20% */
+                 height: 10rem; 
+                 font-size: 3.5rem; 
+            }
+            #card-container-mobile {
+                gap: 6px; /* Mengurangi gap menjadi minimal agar 5 kartu muat */
+                justify-content: center; 
+                padding: 0; /* Menghapus padding agar menempel ke pojok */
+            }
+            
+             /* CONTAINER MOBILE HARUS FULL WIDTH */
+             #mobile-container {
+                max-width: 100%; 
+                width: 100%;
+             }
+
+             /* Mengatur kontainer deskripsi agar ada margin di sisi, tetapi tetap fleksibel */
+             #description-container {
+                 max-width: calc(100% - 2rem); 
+                 margin-left: 1rem;
+                 margin-right: 1rem;
+                 /* Pastikan padding internal untuk teks tetap ada */
+                 padding-left: 1.5rem;
+                 padding-right: 1.5rem;
+             }
+             
+             /* Menyesuaikan text/header container agar ada padding di mobile */
+             .mobile-padding {
+                 padding-left: 1rem;
+                 padding-right: 1rem;
+             }
+        }
+
+        /* Menyembunyikan elemen Interaktif di Desktop */
+        @media (min-width: 768px) {
+            #mobile-container { display: none !important; }
+        }
+    /* Styling Kustom untuk Titik Navigasi (Dots) Slick.js */
+        
+.slick-dots li button:before {
+    content: none !important;
+}
+
+.slick-dots li {
+    margin: 0 4px; 
+    width: 20px; 
+    height: 4px; /* DITIPISKAN: 4px */
+    background-color: #fca5a5; 
+    border-radius: 2px;
+    opacity: 1; 
+    transition: background-color 0.3s, width 0.3s; 
+}
+
+.slick-dots li.slick-active {
+    background-color: #dc2626; 
+    width: 30px; 
+}
+
+.slick-dots li button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+</head>
+<body class="bg-gray-100">
+    <header class="fixed right-0 left-0 top-0 z-50 bg-white shadow-sm">
+    <div class="mx-auto px-4 py-4">
+        
+        <div class="flex items-center px-2 lg:px-6">
+
+            <div class="shrink-0">
+                <a href="#" class="relative block h-10 w-32">
+                    <img
+                        src="images/company-logo.svg"
+                        alt="logo1"
+                        class="object-contain h-full w-full"
+                    />
+                </a>
+            </div>
+
+            <div id="desktop-nav-links" class="hidden lg:flex items-center ml-10">
+                <nav class="flex space-x-4">
+                    
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">layanan</button>
+                        <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 w-max bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1">
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">layanan pengiriman</a>
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">bisnis bersama sicepat</a>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">perusahaan</button>
+                        <div class="absolute hidden group-hover:block top-full left-0 w-52 bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1 mt-1">
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Perusahaan</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Tentang Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap mb-2 pb-2">Berita & Promosi</a>
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Bantuan</a>
+                            <a href="hubungi.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Hubungi Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">FAQ</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Terms & Condition</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Privacy Policy</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Definisi</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">lokasi</a>
+                    <a href="#" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">karir</a>
+                </nav>
+            </div>
+
+            <div class="ml-auto hidden lg:block shrink-0">
+                <a href="#" class="flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out px-4 py-2 font-medium rounded-3xl hover:scale-[1.02] text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+            </div>
+            
+            <button id="mobile-menu-button" class="lg:hidden text-gray-600 hover:text-[#AF272C] focus:outline-none ml-auto">
+                <svg id="icon-menu" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg id="icon-close" class="w-8 h-8 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+        </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden lg:hidden w-full bg-white shadow-lg border-t border-gray-100 p-4">
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">layanan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">perusahaan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">lokasi</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium mb-4 rounded-3xl">karir</a>
+        <a href="#" class="block text-center cursor-pointer px-4 py-2 font-medium rounded-3xl text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+    </div>
+</header>
+<main class="min-h-screen mt-32 ">
+  <section class="flex flex-col items-center justify-center">
+    <div class="">
+      <h1 class="text-4xl font-extrabold bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent leading-tight">Lejitkan Karirmu</h1>
+      <p class="text-center font-bold text-2xl">Bersama Sicepat</p>
+    </div>
+    <div class="max-w-lg w-full">
+      <img src="images/desktop-BFzACHSD.png" alt="bg-1">
+    </div>
+  </section>
+   <section class="max-w-6xl mx-auto mt-11">
+        
+        <div class="flex flex-col items-center justify-center mb-10 my-14 mobile-padding">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Kami bekerja dengan GESIT</h2>
+            <p class="text-lg text-gray-600">Nilai yang kami percaya dan kami lakukan selama bekerja</p>
+        </div>
+
+        <div id="desktop-container" class="max-w-7xl"> 
+            
+            <div class="card-flip-container">
+                <div class="card-flip relative"> 
+                    <div class="card-flip-front absolute rounded-lg bg-red-600 text-white flex items-center justify-center">
+                        <div class="font-black">G</div>
+                    </div>
+                    <div class="card-flip-back absolute rounded-lg text-center">
+                        <h3 class="text-xl font-extrabold text-red-600 mb-2">GIGIH</h3>
+                        <p class="text-sm text-gray-700">Senantiasa bersemangat dan pantang menyerah dalam menyelesaikan tugas dan pekerjaan.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-flip-container">
+                <div class="card-flip relative">
+                    <div class="card-flip-front absolute rounded-lg bg-red-600 text-white flex items-center justify-center">
+                        <div class="font-black">E</div>
+                    </div>
+                    <div class="card-flip-back absolute rounded-lg text-center">
+                        <h3 class="text-xl font-extrabold text-red-600 mb-2">ETOS KERJA UNGGUL</h3>
+                        <p class="text-sm text-gray-700">Menyelesaikan tugas dengan memberi nilai lebih dari yang diharapkan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-flip-container">
+                <div class="card-flip relative">
+                    <div class="card-flip-front absolute rounded-lg bg-red-600 text-white flex items-center justify-center">
+                        <div class="font-black">S</div>
+                    </div>
+                    <div class="card-flip-back absolute rounded-lg text-center">
+                        <h3 class="text-xl font-extrabold text-red-600 mb-2">SEPENUH HATI MELAYANI</h3>
+                        <p class="text-sm text-gray-700">Senantiasa melayani pelanggan dengan sepenuh hati.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-flip-container">
+                <div class="card-flip relative">
+                    <div class="card-flip-front absolute rounded-lg bg-red-600 text-white flex items-center justify-center">
+                        <div class="font-black">I</div>
+                    </div>
+                    <div class="card-flip-back absolute rounded-lg text-center">
+                        <h3 class="text-xl font-extrabold text-red-600 mb-2">INTEGRITAS</h3>
+                        <p class="text-sm text-gray-700">Melakukan hal yang benar dan bersikap profesional dalam setiap pekerjaan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-flip-container">
+                <div class="card-flip relative">
+                    <div class="card-flip-front absolute rounded-lg bg-red-600 text-white flex items-center justify-center">
+                        <div class="font-black">T</div>
+                    </div>
+                    <div class="card-flip-back absolute rounded-lg text-center">
+                        <h3 class="text-xl font-extrabold text-red-600 mb-2">TEAMWORK</h3>
+                        <p class="text-sm text-gray-700">Senantiasa bekerja sama untuk satu tujuan.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="mobile-container" class="flex flex-col items-center">
+            
+            <div id="card-container-mobile" class="flex justify-center mb-8 w-full"> 
+                <div data-key="G" data-color="border-red-600" class="card-item rounded-lg shadow-md flex items-center justify-center bg-red-600 text-white font-black cursor-pointer transition transform duration-200">G</div>
+                <div data-key="E" data-color="border-red-600" class="card-item rounded-lg shadow-md flex items-center justify-center bg-red-600 text-white font-black cursor-pointer transition transform duration-200">E</div>
+                <div data-key="S" data-color="border-red-600" class="card-item rounded-lg shadow-md flex items-center justify-center bg-red-600 text-white font-black cursor-pointer transition transform duration-200">S</div>
+                <div data-key="I" data-color="border-red-600" class="card-item rounded-lg shadow-md flex items-center justify-center bg-red-600 text-white font-black cursor-pointer transition transform duration-200">I</div>
+                <div data-key="T" data-color="border-red-600" class="card-item rounded-lg shadow-md flex items-center justify-center bg-red-600 text-white font-black cursor-pointer transition transform duration-200">T</div>
+            </div>
+
+            <div id="description-container" class="relative bg-white shadow-xl rounded-lg p-6 w-full max-w-lg border-t-8 border-red-600">
+                <div id="arrow" class="arrow-up absolute" style="left: 0;"></div>
+                <div id="description-content">
+                    </div>
+            </div>
+        </div>
+
+    </section>
+<div class="flex justify-center w-full bg-white py-16">
+    <div class="max-w-7xl w-full px-4">
+        
+        <div class="flex flex-col items-center text-center mx-auto mb-10 md:mb-16 max-w-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Life at SiCepat</h2>
+            <p class="text-lg text-gray-600">Tiga alasan tepat memilih bertumbuh bersama tim SiCepat&nbsp;Ekspres!</p>
+        </div>
+
+        <div id="work-environment"></div>
+
+        <div class="flex flex-wrap justify-center w-full gap-y-12 gap-x-8">
+            
+            <div class="
+                flex flex-col max-w-96 w-full lg:w-[calc(33.33%-2rem)] h-[500px] overflow-hidden relative
+                bg-[#005273] p-2 pt-10 rounded-[1.5rem] shadow-lg 
+                hover:shadow-xl transition duration-300
+                text-white
+            ">
+                <div class="pt-2 px-1 flex-shrink-0 text-center">
+                    <h3 class="text-xl font-black  leading-snug mb-2" >Lingkungan Kerja Nyaman</h3> 
+                    
+                    <p class="text-sm leading-snug">
+                        SiCepat memberimu tempat kerja yang <br> nyaman, lingkungan kerja yang positif <br>
+                        sehingga dapat mendukung produktifitasmu <br> untuk terus berkontribusi <br>
+                        dan mengembangkan diri
+                    </p>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full h-[100%] flex justify-center items-end overflow-hidden">
+                     <img 
+                        class="w-full h-auto object-cover" 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/comfy-BHtmy5K6.svg" 
+                        alt="Lingkungan Kerja Nyaman"
+                    >
+                </div>
+            </div>
+
+            <div class="
+                flex flex-col max-w-96 w-full lg:w-[calc(33.33%-2rem)] h-[500px] overflow-hidden relative
+                bg-[#E82127] p-2 pt-10 rounded-[1.5rem] shadow-lg 
+                hover:shadow-xl transition duration-300
+                text-white
+            ">
+                <div class="text-center pt-2 px-1 flex-shrink-0">
+                    <h3 class="text-xl font-black mb-2 leading-snug">Kolaboratif</h3>
+                    <p class="text-sm leading-snug">
+                        SiCepat mendorongmu untuk menjadi individu yang penuh dengan ide dan 
+                        memberikan kesempatan untuk menjalin kolaborasi dan sinergi dalam 
+                        menghasilkan inovasi
+                    </p>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full h-[100%] flex justify-center items-end overflow-hidden">
+                     <img 
+                        class="w-full h-auto object-cover" 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/collab-Cw3vhUZj.svg" 
+                        alt="Kolaboratif"
+                    >
+                </div>
+            </div>
+
+            <div class="
+                flex flex-col max-w-96 w-full lg:w-[calc(33.33%-2rem)] h-[500px] overflow-hidden relative
+                bg-[#F8A800] p-2 pt-10 rounded-[1.5rem] shadow-lg 
+                hover:shadow-xl transition duration-300
+                text-white
+            ">
+                <div class="text-center pt-2 px-1 flex-shrink-0">
+                    <h3 class="text-xl font-black mb-2 leading-snug">Pengembangan Karir</h3>
+                    <p class="text-sm leading-snug">
+                        Melalui lingkungan kerja yang nyaman, suportif dan kolaboratif kamu 
+                        memiliki banyak kesempatan untuk mempertajam skill dan pengalaman, 
+                        mengembangkan potensi dan karir di&nbsp;SiCepat&nbsp;Ekspres
+                    </p>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full h-[100%] flex justify-center items-end overflow-hidden">
+                     <img 
+                        class="w-full h-auto object-cover" 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/career-CzxIeScX.svg" 
+                        alt="Pengembangan Karir"
+                    >
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="flex justify-center w-full bg-gray-50 py-16">
+    <div class="max-w-7xl w-full px-4">
+
+        <div class="flex flex-col items-center text-center mx-auto mb-10 md:mb-16 max-w-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Lowongan Pekerjaan</h2>
+            <p class="text-lg text-gray-600">Cek posisi yang tersedia serta sesuai dengan minat&nbsp;karirmu!</p>
+        </div>
+
+        <div id="vacancy-category"></div>
+
+        <div class="flex flex-wrap justify-center w-full gap-2 md:gap-6">
+            
+            <a class="
+                block 
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                hover:shadow-lg transition duration-300 transform hover:scale-[1.02]
+                text-gray-800 p-3 pb-20 text-center cursor-pointer 
+            " href="/directorate/1dc3545d-91e2-486f-ade4-d0cd19873a06">
+                <div class="w-full h-full  rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/human_resources-CWrnQ0lN.png" 
+                        alt="Human Capital" 
+                        class="w-full h-full object-cover mx-auto "
+                    >
+                </div>
+                
+                <div class="category-card__caption ">
+                    <h3 class="text-lg font-bold mb-0.5  leading-tight">Human Capital</h3>
+                    <p class="text-sm text-red-600 font-medium leading-tight">1 Position</p>
+                </div>
+            </a>
+            
+            <div class="
+                 w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/operational-Bn0HAYlm.png" 
+                        alt="External Affairs" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">External Affairs</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+            
+            <a class="
+                block 
+                 w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                hover:shadow-lg transition duration-300 transform hover:scale-[1.02]
+                text-gray-800 p-3 text-center cursor-pointer
+            " href="/directorate/8a6fd38e-e251-4e60-8262-0cc41bd68913">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/operational-Bn0HAYlm.png" 
+                        alt="Operation" 
+                        class="w-full h-full object-cover mx-auto"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Operation</h3>
+                    <p class="text-sm text-red-600 font-medium leading-tight">10 Position</p>
+                </div>
+            </a>
+
+            <div class="
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/operational-Bn0HAYlm.png" 
+                        alt="Legal" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Legal</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+
+            <a class="
+                block 
+                 w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                hover:shadow-lg transition duration-300 transform hover:scale-[1.02]
+                text-gray-800 p-3 text-center cursor-pointer
+            " href="/directorate/c8ca7a42-4cb0-45e5-9bc6-1ef131be584c">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/information_technology-Bc2BjYmL.png" 
+                        alt="Information Technology" 
+                        class="w-full h-full object-cover mx-auto"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Information Technology</h3>
+                    <p class="text-sm text-red-600 font-medium leading-tight">1 Position</p>
+                </div>
+            </a>
+
+            <a class="
+                block 
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                hover:shadow-lg transition duration-300 transform hover:scale-[1.02]
+                text-gray-800 p-3 pb-20 text-center cursor-pointer
+            " href="/directorate/da8f8c46-4357-4f20-a6b1-f98ddb180389">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/commerce-DEYS1WZ4.png" 
+                        alt="Commercial" 
+                        class="w-full h-full object-cover mx-auto"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Commercial</h3>
+                    <p class="text-sm text-red-600 font-medium leading-tight">1 Position</p>
+                </div>
+            </a>
+
+            <div class="
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/finance-CX2N5bWg.png" 
+                        alt="Finance Accounting Tax" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Finance Accounting Tax</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+
+            <div class="
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/ceo_office-BMMH3H8V.png" 
+                        alt="Corporate Finance & Procurement" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Corporate Finance &amp; Procurement</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+
+            <div class="
+                 w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 pb-20 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/operational-Bn0HAYlm.png" 
+                        alt="Internal Control" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">Internal Control</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+
+            <div class="
+                w-[calc(33.33%-1.33rem)] lg:w-[calc(23.33%-1.5rem)]
+                bg-white border border-gray-200 rounded-2xl shadow-md 
+                text-gray-800 p-3 text-center opacity-70 cursor-default
+            ">
+                <div class="w-full h-full mb-3 rounded-lg overflow-hidden bg-gray-100 max-h-40">
+                    <img 
+                        src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/ceo_office-BMMH3H8V.png" 
+                        alt="CEO Office Team" 
+                        class="w-full h-full object-cover mx-auto grayscale"
+                    >
+                </div>
+                <div class="category-card__caption">
+                    <h3 class="text-lg font-bold mb-0.5 leading-tight">CEO Office Team</h3>
+                    <p class="text-sm text-gray-600 font-medium leading-tight">0 Position</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonial Slider Final</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script> 
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+<div class="flex justify-center w-full bg-gray-50 py-20">
+    
+    <div class="max-w-7xl w-full px-4 md:px-8"> 
+
+        <div class="flex flex-col items-center mx-auto mb-16 text-center max-w-3xl px-4 md:px-8">
+            <h2 class="text-4xl font-bold text-gray-900 mb-2">Cerita dari Tim SiCepat Ekpres</h2>
+            <p class="text-lg font-light text-gray-700 mb-6">Temukan inspirasi dan pengalaman dari mereka yang telah bertumbuh bersama dengan SiCepat</p>
+        </div>
+
+        <div class="w-full">
+            <div class="testimonial-slider">
+                
+                <div class="px-2"> 
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 flex flex-col justify-between h-full min-h-[300px]"> 
+                        <div class="mb-8">
+                            <p class="text-gray-800 text-base leading-relaxed">
+                                Bekerja di SiCepat sebagai Product Manager memberikan bepadacdsas pada saya untuk mingsplorasi bisnis SiCepat yang terus tembentuk diri menjadi lebik abik kncwledge, risiko maupun camp memngang gelar dan jabatan.
+                            </p>
+                        </div>
+                        <div class="flex items-center mt-auto pt-4 border-t border-gray-100">
+                            <img class="h-10 w-10 rounded-full object-cover mr-4" src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/finance-CX2N5bWg.png" alt="Rahan Galileo">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-800 leading-tight">Rahan Galileo</h3>
+                                <div class="text-xs text-gray-500 leading-tight">General Legal Manager Tax</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="px-2">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 flex flex-col justify-between h-full min-h-[300px]">
+                        <div class="mb-8">
+                            <p class="text-gray-800 text-base leading-relaxed">
+                                Bekerja di SiCepat sebagai Product Manager m'sempatan barry kesepapos bisnispp untuk terus bertembenngg kedsnimisa yadsa. terus bevermbgajnh tedaadarr segi dang Mementuk diri menjadi absorntt skill, knsikleorngapi risiko and menjadi pribadi kuat secara menta mental.
+                            </p>
+                        </div>
+                        <div class="flex items-center mt-auto pt-4 border-t border-gray-100">
+                            <img class="h-10 w-10 rounded-full object-cover mr-4" src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/human_resources-CWrnQ0lN.png" alt="Suci Novianti">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-800 leading-tight">Suci Novianti</h3>
+                                <div class="text-xs text-gray-500 leading-tight">Manager IT Product Back Office</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-2">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 flex flex-col justify-between h-full min-h-[300px]">
+                        <div class="mb-8">
+                            <p class="text-gray-800 text-base leading-relaxed">
+                                Saya sangat teusunkur bisa menjidj satjh kami kanansee di siru saya dardakkan dsi SiCepat pengthaggan peng dnagmnonk and Cepat. Di Siri, lebit kami bddaur tuu oasih cepaat dann posaslan saqat 1'tesih depastearme lain, keesnstatoic sakuan saing bertukair peiihsa ibstuu ntu pimimpi jadi terbaik.
+                            </p>
+                        </div>
+                        <div class="flex items-center mt-auto pt-4 border-t border-gray-100">
+                            <img class="h-10 w-10 rounded-full object-cover mr-4" src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/operational-Bn0HAYlm.png" alt="Rahesya Putera Syailendra">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-800 leading-tight">Rahesya Putera Syailendra</h3>
+                                <div class="text-xs text-gray-500 leading-tight">Supervisor Network Strategy &amp; Planning</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="px-2">
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 flex flex-col justify-between h-full min-h-[300px]">
+                        <div class="mb-8">
+                            <p class="text-gray-800 text-base leading-relaxed">
+                                Dalm dunia litigasi ymjeru litigasi, SiCepat dtnurut touk sekui sekialat selnya betnk dmrn a ds prait tiniksy hesah grai qkoisite, dbdrodrn rmebaikkt. Bekerai, welai. Belkrt mreran krn tentu soluk detergarmnnganten dekans soliis yang terbaiik.
+                            </p>
+                        </div>
+                        <div class="flex items-center mt-auto pt-4 border-t border-gray-100">
+                            <img class="h-10 w-10 rounded-full object-cover mr-4" src="https://fe-cft.cdn.sicepat.express/sicepat-career/assets/human_resources-CWrnQ0lN.png" alt="I Gusti Ayu Btari Dewani">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-800 leading-tight">I Gusti Ayu Btari Dewani</h3>
+                                <div class="text-xs text-gray-500 leading-tight">Manager Legal Litigation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
+</main>
+    <footer class="bg-white px-4 py-16 z-50">
+      <div class="mx-auto">
+        <div class="grid gap-8 md:grid-cols-12 ">
+          <div class="md:col-span-3">
+            <img src="images/company-logo.svg" alt="logo">
+            <p class="mb-4 text-sm text-gray-600">2025 PT. SiCepat Ekspres Indonesia.
+              <br>
+              All rights reserved.
+            </p>
+            <div class="flex flex-wrap flex-row items-center gap-x-2 gap-y-4 mt-2">
+              <img src="images/ISO27K1.webp" alt="iso" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-ALDEI.png" alt="aldei" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-asperindo.png" alt="asperindo" class="h-auto max-w-24 w-full flex-1 ">
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <h3 class=" mb-4 text-lg font-medium">Produk & Layanan</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">REGULER</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">BEST</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">GOKIL</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">COD</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">HALU</p>
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+             <h3 class=" mb-4 text-lg font-medium">Informasi</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">FAQ</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Terms & Condition</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Privacy Policy</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Definisi</p>
+
+          </div>
+
+        </div>
+        <div class="md:col-span-3">
+           <h3 class=" mb-4 text-lg font-medium">Contact</h3>
+           <div class="space-y-3">
+            <p class="text-sm text-gray-600">021-3020-5050</p>
+            <p class="text-sm text-gray-600">0812 9966 6088</p>
+            <p class="text-sm text-gray-600">
+              Menara 2 BTN Lt. 10, 11, 12, dan 15
+              <br>
+              Kawasan Kuningan Persada,
+              <br>
+              Desa/Kelurahan Guntur, Kec. Setiabudi,
+              <br>
+              Kota Adm. Jakarta Selatan, Provinsi DKI Jakarta.
+            </p>
+           </div>
+        </div>
+        <div class="md:col-span-2">
+          <h3 class=" mb-4 text-lg font-medium">Download app</h3>
+          <div class="flex flex-col gap-4">
+            <img src="images/playstore.svg" alt="playstore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+             <img src="images/applestore.svg" alt="applestore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script type="text/javascript">
+// KODE JAVASCRIPT SLICK.JS YANG DIPERBAIKI
+// KODE JAVASCRIPT SLICK.JS FINAL DAN AKURAT
+$(document).ready(function(){
+    $('.testimonial-slider').slick({
+        dots: true,             
+        infinite: true,         
+        speed: 500,
+        autoplay: true,         
+        autoplaySpeed: 4000,    
+
+        // PENGATURAN CENTER MODE (Kartu di tengah lebar/normal)
+        centerMode: true,           
+        centerPadding: '10px',     // Nilai sangat kecil
+        slidesToShow: 1,            
+        slidesToScroll: 1,
+
+        // Pengaturan Responsif 
+        responsive: [
+            {
+                breakpoint: 1280, 
+                settings: {
+                    centerPadding: '10px', 
+                    slidesToShow: 1,
+                }
+            },
+            {
+                breakpoint: 768, // Tablet
+                settings: {
+                    centerMode: true,
+                    centerPadding: '5px', 
+                    slidesToShow: 1, 
+                }
+            },
+            {
+                breakpoint: 480,  // Handphone
+                settings: {
+                    centerMode: false, 
+                    slidesToShow: 1, 
+                }
+            }
+        ]
+    });
+});
+</script>
+</body>
+<script>
+    // 1. Ambil elemen
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+
+    // 2. Tambahkan event listener saat tombol diklik
+    menuButton.addEventListener('click', function() {
+        // 3. Toggle class 'hidden' pada menu mobile
+        mobileMenu.classList.toggle('hidden');
+        
+        // 4. Ganti ikon
+        // Periksa apakah menu sekarang terbuka (tidak memiliki class 'hidden')
+        if (!mobileMenu.classList.contains('hidden')) {
+            // Menu terbuka: tampilkan ikon silang, sembunyikan ikon menu
+            iconMenu.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+        } else {
+            // Menu tertutup: tampilkan ikon menu, sembunyikan ikon silang
+            iconMenu.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        }
+    });
+</script>
+<script>
+        // 1. Data Konten
+        const coreValues = {
+            G: { title: "GIGIH", subtitle: "Senantiasa bersemangat dan pantang menyerah dalam menyelesaikan tugas dan pekerjaan.", color: "border-red-600" },
+            E: { title: "ETOS KERJA UNGGUL", subtitle: "Menyelesaikan tugas dengan memberi nilai lebih dari yang diharapkan.", color: "border-red-600" },
+            S: { title: "SEPENUH HATI MELAYANI", subtitle: "Senantiasa melayani pelanggan dengan sepenuh hati.", color: "border-red-600" },
+            I: { title: "INTEGRITAS", subtitle: "Melakukan hal yang benar dan bersikap profesional dalam setiap pekerjaan.", color: "border-red-600" },
+            T: { title: "TEAMWORK", subtitle: "Senantiasa bekerja sama untuk satu tujuan.", color: "border-red-600" }
+        };
+
+        const cardItems = document.querySelectorAll('#mobile-container .card-item');
+        const descriptionContainer = document.getElementById('description-container');
+        const descriptionContent = document.getElementById('description-content');
+        const arrow = document.getElementById('arrow');
+        
+        function updateContent(key, cardElement) {
+            const data = coreValues[key];
+
+            // 1. Ganti Warna Border Kontainer Deskripsi
+            descriptionContainer.className = descriptionContainer.className.replace(/border-\w+-\d+/g, data.color);
+
+            // 2. Perbarui Konten dengan animasi sederhana
+            const newContent = `
+                <h3 class="text-2xl font-extrabold text-red-600 mb-2">${data.title}</h3>
+                <p class="text-base text-gray-700">${data.subtitle}</p>
+            `;
+            
+            // Animasi Keluar (Fade Out)
+            descriptionContent.style.opacity = '0';
+            
+            // Perbarui dan Animasi Masuk
+            setTimeout(() => {
+                descriptionContent.innerHTML = newContent;
+                descriptionContent.style.opacity = '1';
+                descriptionContent.classList.add('animate-slide-in');
+            }, 100); 
+
+            // 3. Update Posisi Panah (Arrow)
+            const cardRect = cardElement.getBoundingClientRect();
+            const containerRect = descriptionContainer.getBoundingClientRect();
+            
+            // Posisi kartu relatif terhadap viewport
+            const cardCenter = cardRect.left + (cardRect.width / 2);
+
+            // Posisi container deskripsi relatif terhadap viewport
+            const containerLeft = containerRect.left;
+            
+            // Hitung posisi horizontal panah (Pusat Kartu - Posisi Kiri Pembungkus Deskripsi - Setengah Lebar Panah (15px))
+            const arrowPosition = cardCenter - containerLeft - 15; 
+            
+            arrow.style.transform = `translateX(${arrowPosition}px)`;
+        }
+
+        function handleCardClick() {
+             cardItems.forEach(item => item.classList.remove('active-card'));
+             this.classList.add('active-card');
+             updateContent(this.dataset.key, this);
+        }
+
+        function setupMobileInteractivity() {
+            // Hanya aktifkan listener jika lebar layar adalah mobile
+            if (window.innerWidth < 768) {
+                // Atur Event Listener untuk setiap Kartu
+                cardItems.forEach(card => {
+                    card.removeEventListener('click', handleCardClick); 
+                    card.addEventListener('click', handleCardClick);
+                });
+
+                // LOGIKA DEFAULT: Mulai dari kartu G
+                const defaultCard = document.querySelector('#mobile-container .card-item[data-key="G"]');
+                
+                // Pastikan Kartu G ada
+                if (defaultCard) {
+                     // 1. Hapus kelas 'active-card' dari semua kartu (jika ada)
+                    cardItems.forEach(item => item.classList.remove('active-card'));
+                     
+                    // 2. Tambahkan kelas active ke kartu default (G)
+                    defaultCard.classList.add('active-card');
+                    
+                    // 3. Muat konten G dan atur posisi panah
+                    setTimeout(() => updateContent('G', defaultCard), 50);
+                }
+            }
+        }
+        
+        // Panggil fungsi saat DOM selesai dimuat dan saat ukuran layar diubah
+        document.addEventListener('DOMContentLoaded', setupMobileInteractivity);
+        window.addEventListener('resize', setupMobileInteractivity);
+    </script>
+
+</html>

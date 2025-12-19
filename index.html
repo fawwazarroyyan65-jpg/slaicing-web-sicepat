@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+ <header class="fixed right-0 left-0 top-0 z-50 bg-white shadow-sm">
+    <div class="mx-auto px-4 py-4">
+        
+        <div class="flex items-center px-2 lg:px-6">
+
+            <div class="shrink-0">
+                <a href="#" class="relative block h-10 w-32">
+                    <img
+                        src="images/company-logo.svg"
+                        alt="logo1"
+                        class="object-contain h-full w-full"
+                    />
+                </a>
+            </div>
+
+            <div id="desktop-nav-links" class="hidden lg:flex items-center ml-10">
+                <nav class="flex space-x-4">
+                    
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">layanan</button>
+                        <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 w-max bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1">
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">layanan pengiriman</a>
+                            <a href="#" class="block px-4 py-2 m-3 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">bisnis bersama sicepat</a>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">perusahaan</button>
+                        <div class="absolute hidden group-hover:block top-full left-0 w-52 bg-white shadow-lg rounded-xl overflow-hidden z-50 py-1 mt-1">
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Perusahaan</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Tentang Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap mb-2 pb-2">Berita & Promosi</a>
+                            <a href="#" class="block px-4 py-2 font-bold text-[#AF272C] whitespace-nowrap">Bantuan</a>
+                            <a href="hubungi.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Hubungi Kami</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">FAQ</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Terms & Condition</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Privacy Policy</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg whitespace-nowrap">Definisi</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">lokasi</a>
+                    <a href="karir.html" class="flex items-center justify-center cursor-pointer rounded-3xl px-4 py-2 font-medium transition-all duration-200 ease-in-out hover:scale-[1.02] text-gray-600 hover:text-[#AF272C] text-base">karir</a>
+                </nav>
+            </div>
+
+            <div class="ml-auto hidden lg:block shrink-0">
+                <a href="#" class="flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out px-4 py-2 font-medium rounded-3xl hover:scale-[1.02] text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+            </div>
+            
+            <button id="mobile-menu-button" class="lg:hidden text-gray-600 hover:text-[#AF272C] focus:outline-none ml-auto">
+                <svg id="icon-menu" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg id="icon-close" class="w-8 h-8 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+        </div>
+    </div>
+    
+    <div id="mobile-menu" class="hidden lg:hidden w-full bg-white shadow-lg border-t border-gray-100 p-4">
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">layanan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">perusahaan</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium border-b border-gray-100 rounded-3xl">lokasi</a>
+        <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-100 font-medium mb-4 rounded-3xl">karir</a>
+        <a href="#" class="block text-center cursor-pointer px-4 py-2 font-medium rounded-3xl text-base bg-[#AF272C] text-white hover:bg-[#8C1F23]">Nikmati Diskon s/d 99% Disini</a>
+    </div>
+</header>
+
+    <main class="min-h-screen bg-white pt-6 md:pt-8">
+      <div
+        class="relative bg-[url('/images/bgUtama.png')] bg-cover bg-no-repeat mt-10 h-[400px] min-h-[300px] md:min-w-[700px] md:min-h-[700px]  w-full flex justify-center"
+      >
+        <div
+          class="absolute inset-0 hidden bg-gradient-to-b from-black/60 bg-cover bg-no-repeat"
+        ></div>
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="z-10 text-center text-white max-w-4xl pt-20 md:pt-32">
+          <h1
+            class="text-3xl md:text-4xl font-semibold leading-tight [font-family:Poppins,sans-serif]"
+          >
+            kembangkan bisnismu
+          </h1>
+          <h1
+            class="text-3xl md:text-4xl font-semibold leading-tight mb-6 [font-family:Poppins,sans-serif]"
+          >
+            bersama sicepat
+          </h1>
+          <p class="mb-8 text-lg leading-relaxed px-4 md:px-48">
+            SiCepat Ekspres siap mendukung bisnis Anda dengan layanan pengiriman
+            cepat, aman, dan terpercaya ke seluruh Indonesia. Bersama SiCepat
+            #SemuaJadiMudah.
+          </p>
+          <div class="flex justify-center">
+            <button
+              class="flex items-center justify-center rounded-full cursor-pointer font-medium bg-[#AF272C] px-6 py-4 transition-all duration-200 ease-in-out hover:scale-105 hover:bg-[#8C1F23]"
+            >
+              isi formulir bisnis
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="relative -mt-10 px-10 mx-3 md:mx-10 rounded-2xl bg-white shadow-lg z-10"
+      >
+        <section class="flex flex-col item-center bg-white py-10 ">
+          <div class="container flex flex-col items-center text-center">
+            <h1
+              class="mb-4 text-3xl font-semibold [font-family:Poppins,sans-serif]"
+            >
+              Pilihan tepat, pilih SiCepat!
+            </h1>
+            <p class="mb-8 max-w-3xl text-lg text-gray-500">
+              Partner terpercaya untuk melayani pengiriman ke seluruh Indonesia!
+            </p>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl">
+              <div
+                class="flex flex-col text-center px-1 py-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/1-competitive-price.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Biaya Pengiriman Kompetitif
+                </h3>
+              </div>
+              <div
+                class="flex flex-col text-center py-1 px-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/2-nusantara-reach.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Jangkauan Luas Ke Seluruh Nusantara
+                </h3>
+              </div>
+              <div
+                class="flex flex-col text-center py-1 px-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/3-realtime-tracking.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Lacak Paket Secara Real-Time
+                </h3>
+              </div>
+              <div
+                class="flex flex-col text-center py-1 px-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/4-aio-dashboard.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Kelola Bisnis melalui All-In-One Dashboard
+                </h3>
+              </div>
+              <div
+                class="flex flex-col text-center py-1 px-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/5-cs-24h.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Bantuan 24/7 Setiap Saat
+                </h3>
+              </div>
+              <div
+                class="flex flex-col text-center py-1 px-1 md:p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 hover:shadow-lg transition-shadow duration-300"
+              >
+                <div
+                  class="w-full h-24 flex items-center justify-center mb-5 mt-5"
+                >
+                  <img
+                    src="images/6-proud-indonesian.svg"
+                    alt="pilihan-1"
+                    class="object-contain"
+                  />
+                </div>
+
+                <h3 class="text-lg text-gray-800 text-center">
+                  Bangga Buatan Indonesia
+                </h3>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+<div
+    class="relative flex items-center justify-center mt-20 bg-[url('Images/form.png')] min-h-screen bg-cover bg-no-repeat"
+>
+    <div class="absolute inset-0 bg-black/75"></div>
+    <div class="relative z-10 container mx-auto py-8 px-4 sm:px-6 lg:px-8 flex justify-center items-center">
+        
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 lg:items-center w-full max-w-6xl">
+            
+            <div class="w-full lg:w-[45%] order-2 lg:order-1">
+                <div
+                    class="bg-white rounded-2xl p-6 shadow-xl lg:py-6 lg:px-8 lg:my-8"
+                >
+                    <form class="space-y-4">
+                        
+                        <div>
+                            <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1">
+                                Nama Perusahaan <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" id="company_name" required name="company_name"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                                placeholder="Masukkan nama perusahaan Anda"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label for="full-name" class="block text-sm font-medium text-gray-700 mb-1">
+                                Nama Lengkap <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" id="full-name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                                placeholder="Masukkan nama lengkap Anda" name="full_name"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label for="phone-number" class="block text-sm font-medium text-gray-700 mb-1">
+                                Nomor Handphone <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" id="phone-number" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                                placeholder="Masukkan nomor handphone Anda" name="phone_number"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                                Email
+                            </label>
+                            <input type="text" id="email" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                                placeholder="Masukkan email lengkap Anda" name="email"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">
+                                Alamat
+                            </label>
+                            <input type="text" id="alamat" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                                placeholder="Masukkan alamat lengkap Anda" name="alamat"
+                            />
+                        </div>
+                        
+                        <div>
+                            <label for="jumlah_paket" class="block text-sm font-medium text-gray-700 mb-1">
+                                Estimasi Jumlah Paket Harian <span class="text-red-600">*</span>
+                            </label>
+                            <select id="jumlah_paket" required name="jumlah_paket"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                            >
+                                <option value="" selected disabled>
+                                    Pilih jumlah estimasi paket harian Anda
+                                </option>
+                                <option value="0-24">0-24</option>
+                                <option value="25-99">25-99</option>
+                                <option value="100-499">100-499</option>
+                                <option value=">500">Lebih dari 500</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <button
+                                type="submit"
+                                class="flex items-center justify-center rounded-full px-4 transition-all duration-200 ease-in-out hover:scale-105 bg-[#AF272C] text-white hover:bg-[#8C1F23] w-full py-3 text-base cursor-pointer"
+                            >
+                                Kirim Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="w-full lg:w-[55%] order-1 lg:order-2 text-white space-y-6 py-10 px-4">
+                <h2 class="text-3xl font-semibold leading-tight">
+                    Langkah Mengembangkan Bisnis dengan SiCepat?
+                </h2>
+                
+                <div class="flex items-start gap-8">
+                    <div class="flex flex-col items-center max-w-md">
+                        <div class="flex items-center justify-center text-white text-lg w-9 h-9 border-8 border-[#8D171B] bg-[#AF272C] rounded-full">1</div>
+                        <div class="w-0.5 h-12 bg-gray-400 my-2"></div>
+                    </div>
+                    <div class="pt-1">
+                        <p class="font-semibold text-lg">Isi Formulir Bisnis</p>
+                        <p class="text-base mt-1">Mengisi form kerjasama bisnis di samping sebagai perusahaan</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-8">
+                    <div class="flex flex-col items-center max-w-md">
+                        <div class="flex items-center justify-center text-white text-lg w-9 h-9 border-8 border-[#8D171B] bg-[#AF272C] rounded-full">2</div>
+                        <div class="w-0.5 h-12 bg-gray-400 my-2"></div>
+                    </div>
+                    <div class="pt-1">
+                        <p class="font-semibold text-lg">Verifikasi Kerjasama</p>
+                        <p class="text-base mt-1">Team Sales SiCepat akan menghubungi Anda untuk menindaklanjuti permintaan Anda</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start gap-8">
+                    <div class="flex flex-col items-center max-w-md">
+                        <div class="flex items-center justify-center text-white text-lg w-9 h-9 border-8 border-[#8D171B] bg-[#AF272C] rounded-full">3</div>
+                        </div>
+                    <div class="pt-1">
+                        <p class="font-semibold text-lg">Lampirkan Dokumen Pendukung</p>
+                        <p class="text-base mt-1">Lengkapi dokumen yang diperlukan untuk badan usaha atau perorangan, cukup KTP dan NPWP</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+</div>
+      <div class="flex flex-col items-center mt-20 px-4 md:px-8 lg:px-20">
+        <h2 class="mb-12 text-3xl font-semibold text-center ">Dengan bangga dipercaya oleh partner kami</h2>
+        <div class="w-full max-w-6xl">
+         <div class="">
+<div class="w-full max-w-6xl">
+    
+    <div class="">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 items-center justify-items-center">
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/bca-logo.png" alt="BCA Digital" class="max-h-10 w-auto object-contain">
+            </div>
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/taco-logo.png" alt="TACO" class="max-h-10 w-auto object-contain">
+            </div>
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/map-logo.png" alt="MAPCLUB" class="max-h-16 w-auto object-contain">
+            </div>
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/sociolla-logo.png" alt="Sociolla" class="max-h-10 w-auto object-contain">
+            </div>
+            
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 items-center justify-items-center max-w-5xl mx-auto">
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/tia-logo.png" alt="THIS IS APRIL" class="max-h-16 w-auto object-contain">
+            </div>
+            
+            <div class="flex items-center justify-center h-20 w-full">
+                <img src="images/heavenlights-logo.png" alt="Heavenlights" class="max-h-32 w-auto object-contain">
+            </div>
+            
+            <div class="flex items-center justify-center h-20 w-full col-span-2 md:col-span-1">
+                 <img src="images/azarine-logo.png" alt="Azarine" class="max-h-10 w-auto object-contain">
+            </div>
+            
+        </div>
+        
+    </div>
+</div>  
+</div>
+      </div>
+    </main>
+     <footer class="bg-white px-4 py-16 z-50">
+      <div class="mx-auto">
+        <div class="grid gap-8 md:grid-cols-12 ">
+          <div class="md:col-span-3">
+            <img src="images/company-logo.svg" alt="logo">
+            <p class="mb-4 text-sm text-gray-600">2025 PT. SiCepat Ekspres Indonesia.
+              <br>
+              All rights reserved.
+            </p>
+            <div class="flex flex-wrap flex-row items-center gap-x-2 gap-y-4 mt-2">
+              <img src="images/ISO27K1.webp" alt="iso" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-ALDEI.png" alt="aldei" class="h-auto max-w-24 w-full flex-1 ">
+               <img src="images/logo-asperindo.png" alt="asperindo" class="h-auto max-w-24 w-full flex-1 ">
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <h3 class=" mb-4 text-lg font-medium">Produk & Layanan</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">REGULER</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">BEST</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">GOKIL</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">COD</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">HALU</p>
+
+            </div>
+          </div>
+          <div class="md:col-span-2">
+             <h3 class=" mb-4 text-lg font-medium">Informasi</h3>
+            <div class="space-y-3 ">
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">FAQ</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Terms & Condition</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Privacy Policy</p>
+              <p class="text-sm  text-gray-600 transition-all duration-200 ease-in-out hover:scale-105 hover:text-[#AF272C]">Definisi</p>
+
+          </div>
+
+        </div>
+        <div class="md:col-span-3">
+           <h3 class=" mb-4 text-lg font-medium">Contact</h3>
+           <div class="space-y-3">
+            <p class="text-sm text-gray-600">021-3020-5050</p>
+            <p class="text-sm text-gray-600">0812 9966 6088</p>
+            <p class="text-sm text-gray-600">
+              Menara 2 BTN Lt. 10, 11, 12, dan 15
+              <br>
+              Kawasan Kuningan Persada,
+              <br>
+              Desa/Kelurahan Guntur, Kec. Setiabudi,
+              <br>
+              Kota Adm. Jakarta Selatan, Provinsi DKI Jakarta.
+            </p>
+           </div>
+        </div>
+        <div class="md:col-span-2">
+          <h3 class=" mb-4 text-lg font-medium">Download app</h3>
+          <div class="flex flex-col gap-4">
+            <img src="images/playstore.svg" alt="playstore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+             <img src="images/applestore.svg" alt="applestore" class="transition-all duration-200 ease-in-out hover:scale-[1.02] w-36 md:w-full">
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+    <script>
+    // 1. Ambil elemen
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+
+    // 2. Tambahkan event listener saat tombol diklik
+    menuButton.addEventListener('click', function() {
+        // 3. Toggle class 'hidden' pada menu mobile
+        mobileMenu.classList.toggle('hidden');
+        
+        // 4. Ganti ikon
+        // Periksa apakah menu sekarang terbuka (tidak memiliki class 'hidden')
+        if (!mobileMenu.classList.contains('hidden')) {
+            // Menu terbuka: tampilkan ikon silang, sembunyikan ikon menu
+            iconMenu.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+        } else {
+            // Menu tertutup: tampilkan ikon menu, sembunyikan ikon silang
+            iconMenu.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        }
+    });
+</script>
+</html>
